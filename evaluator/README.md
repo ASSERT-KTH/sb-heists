@@ -1,6 +1,7 @@
 # Patch Evaluator
 
 A tool for evaluating smart contract patches by running test suites and analyzing results.
+This tool currently supports the follwing dataset: `smartbugs-curated/0.4.x/contracts/dataset`.
 
 ## Prerequisites
 
@@ -42,7 +43,7 @@ The evaluator can be run from the command line with the following arguments:
 python src/main.py \
     --format <solidity|bytecode> \
     --patch <path-to-patch-file> \
-    --contract-file <path-to-contract> \
+    --contract-file <contract-from-dataset> \
     --main-contract <contract-name>
 ```
 
@@ -50,7 +51,7 @@ python src/main.py \
 
 - `--format`: The format of the patch file (choices: 'solidity' or 'bytecode')
 - `--patch`: Path to the patch file that will be evaluated
-- `--contract-file`: Path to the original smart contract file
+- `--contract-file`: Contract in `smartbugs-curated/0.4.x/contracts/dataset`. Required format `<vulnerability-type>/<filename>`.
 - `--main-contract`: Name of the main contract to be patched
 
 ### Example
@@ -58,9 +59,9 @@ python src/main.py \
 ```bash
 python src/main.py \
     --format solidity \
-    --patch ./patches/fix.sol \
-    --contract-file ./contracts/vulnerable.sol \
-    --main-contract VulnerableContract
+    --patch ./example/reentrancy_simple_patch.sol \
+    --contract-file reentrance/reentrancy_simple.sol \
+    --main-contract Reentrance
 ```
 
 ## Output
@@ -75,16 +76,17 @@ The tool will output evaluation results including:
 Example output:
 ```
 Evaluation Results:
-Contract File: ./contracts/vulnerable.sol
-Patch File: ./patches/fix.sol
-Total Tests: 10
-Passed Tests: 8
-Sanity Success: True
+Contract File: reentrancy/reentrancy_simple.sol
+Patch File: ./examples/reentrancy_simple_patch.sol
+Total Tests: 2
+Passed Tests: 1
+Sanity Success: 1
 Sanity Failures: 0
 
-Exploit Test Failures:
-- Test case #3: Invalid state after transfer
-- Test case #7: Reentrancy vulnerability still present
+Exploit Test Failures (1):
+- Exploit file: reentrancy/reentrancy_simple_test.js
+  Contract File: reentrancy/reentrancy_simple.sol
+  Error: Transaction reverted without a reason string
 ```
 
 ## Development

@@ -4,6 +4,7 @@ from models.patch import Patch
 from constants import PatchFormat
 from config import BASE_DIR, LOG_LEVEL
 import logging
+import os
 
 def setup_logging():
     logging.basicConfig(
@@ -22,17 +23,17 @@ def main():
     parser = argparse.ArgumentParser(description='Evaluate smart contract patches')
     parser.add_argument('--format', required=True, help='Patch format', choices=['solidity', 'bytecode'])
     parser.add_argument('--patch', required=True, help='Path to patch file')
-    parser.add_argument('--contract-file', required=True, help='Contract file to patch')
+    parser.add_argument('--contract-file', required=True, help=f'Contract file to patch in dataset {os.path.abspath(BASE_DIR)}/contracts/dataset (e.g., reentrancy/reentrancy_simple.sol)')
     parser.add_argument('--main-contract', required=True, help='Main contract to patch')
     
     args = parser.parse_args()
 
     try:
+        # Initialize evaluator early to access dataset files
+        evaluator = PatchEvaluator(BASE_DIR)
+
         logger.info(f"Loading patch from {args.patch}")
         patch = load_patch(args.patch, args.contract_file, args.main_contract, args.format)
-        
-        logger.info("Initializing patch evaluator")
-        evaluator = PatchEvaluator(BASE_DIR)
         
         logger.info("Starting patch evaluation")
         result = evaluator.evaluate_patch(patch)
@@ -52,9 +53,11 @@ def main():
                 print(f"- {failure}")
         
         if result.failed_results:
-            print("\nExploit Test Failures:")
+            print(f"\nExploit Test Failures ({len(result.failed_results)}):")
             for failure in result.failed_results:
-                print(f"- {failure}")
+                print(f"- Exploit file: {failure["file"]}")
+                print(f"  Contract File: {failure["contractFile"]}")
+                print(f"  Error: {failure["error"]}")
                 
     except Exception as e:
         logger.error(f"Fatal error: {str(e)}")
