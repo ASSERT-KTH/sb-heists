@@ -29,9 +29,6 @@ class TestResult:
     def get_failed_tests(self) -> int:
         return self.failed_tests
     
-    def get_sanity_failures(self) -> List[str]:
-        return self.failures_sanity
-    
     def get_failed_results(self) -> List[str]:
         return self.failed_results
     
