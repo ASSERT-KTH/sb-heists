@@ -7,7 +7,7 @@
   "failingFiles": 0,
   "failedFunctionalCheck": 0,
   "passedFunctionalCheck": 95,
-  "failedFunctionalChecks": [],
+  "failedFunctionalCheckResults": [],
   "passedResults": [
     {
       "title": "exploit access control vulnerability",

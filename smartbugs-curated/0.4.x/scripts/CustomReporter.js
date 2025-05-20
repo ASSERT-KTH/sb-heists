@@ -19,7 +19,7 @@ class CustomReporter extends Spec {
     let allTestsPassed = true;
     let allFiles = 0;
     let failedFunctionalCheck = 0;
-    const failedFunctionalChecks = [];
+    const failedFunctionalCheckResults = [];
     let passedFunctionalCheck = 0;
     const passedResults = [];
     const failedResults = [];
@@ -55,7 +55,7 @@ class CustomReporter extends Spec {
       };
       if (test.title.includes("functional check")) {
         failedFunctionalCheck += 1;
-        failedFunctionalChecks.push(result);
+        failedFunctionalCheckResults.push(result);
       } else {
         failedResults.push(result);
       }
@@ -119,7 +119,7 @@ class CustomReporter extends Spec {
           failingFiles: failedFiles,
           failedFunctionalCheck: failedFunctionalCheck,
           passedFunctionalCheck: passedFunctionalCheck,
-          failedFunctionalChecks: failedFunctionalChecks,
+          failedFunctionalCheckResults: failedFunctionalCheckResults,
           passedResults: passedResults,
           failedResults: failedResults,
         };
