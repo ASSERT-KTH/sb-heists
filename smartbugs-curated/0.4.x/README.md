@@ -71,7 +71,7 @@ npx hardhat test test/reentrancy/simple_dao_test.js
 
 Each test file contains two types of tests:
 
-### 1. Sanity Tests
+### 1. Functional Check Tests
 Verify normal contract behavior without exploiting vulnerabilities. These ensure the contract works as intended under normal circumstances.
 
 ### 2. Exploit Tests
@@ -80,7 +80,7 @@ Demonstrate the vulnerability by executing attack sequences that exploit the sec
 Example output:
 ```bash
     Reentrancy Attack for simpleDAO.sol
-    ✔ sanity check: reentrancy/simpleDAO.sol (632ms)
+    ✔ functional check: reentrancy/simpleDAO.sol (632ms)
     ✔ should successfully drain funds through reentrancy attack
 
   2 passing (651ms)

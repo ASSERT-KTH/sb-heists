@@ -70,7 +70,7 @@ The tool will output evaluation results including:
 - Contract and patch file information
 - Total number of tests run
 - Number of passed tests
-- Sanity check results
+- Functional check results
 - Details of any test failures
 
 Example output:
@@ -80,8 +80,8 @@ Contract File: reentrancy/reentrancy_simple.sol
 Patch File: ./examples/reentrancy_simple_patch.sol
 Total Tests: 2
 Passed Tests: 1
-Sanity Success: 1
-Sanity Failures: 0
+Functional Check Success: 1
+Fuctional Check Failures: 0
 
 Exploit Test Failures (1):
 - Exploit file: reentrancy/reentrancy_simple_test.js
