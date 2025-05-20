@@ -8,9 +8,9 @@ class TestResult:
     total_tests: int
     passed_tests: int
     failed_tests: int
-    sanity_success: int
-    sanity_failures: int
-    failed_sanity_results: List[str]
+    functional_success: int
+    functional_failures: int
+    failed_functional_results: List[str]
     failed_results: List[str]
     passed_results: List[str]
 
@@ -36,4 +36,4 @@ class TestResult:
         return self.passed_results
     
     def fully_repaired(self) -> bool:
-        return self.sanity_failures == 0 and self.passed_tests - self.sanity_success == 0
+        return self.functional_failures == 0 and self.passed_tests - self.functional_success == 0

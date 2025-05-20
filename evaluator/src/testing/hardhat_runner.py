@@ -65,9 +65,9 @@ class HardhatTestRunner:
             total_tests=test_results["totalTests"],
             passed_tests=test_results["passingTests"],
             failed_tests=test_results["failingTests"],
-            sanity_success=test_results["passedSanity"],
-            sanity_failures=test_results["failedSanity"],
-            failed_sanity_results=test_results["failedSanityTests"],
+            functional_success=test_results["passedFunctionalCheck"],
+            functional_failures=test_results["failedFunctionalCheck"],
+            failed_functional_results=test_results["failedFunctionalCheckResults"],
             failed_results=test_results["failedResults"],
             passed_results=test_results["passedResults"]
         )

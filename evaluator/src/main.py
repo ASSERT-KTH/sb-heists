@@ -44,12 +44,12 @@ def main():
         print(f"Patch File: {result.patch_path}")
         print(f"Total Tests: {result.total_tests}")
         print(f"Passed Tests: {result.passed_tests}")
-        print(f"Sanity Success: {result.sanity_success}")
-        print(f"Sanity Failures: {result.sanity_failures}")
+        print(f"Functional Check Success: {result.functional_success}")
+        print(f"Fuctional Check Failures: {result.functional_failures}")
         
-        if result.failed_sanity_results:
-            print("\nSanity Test Failures:")
-            for failure in result.failed_sanity_results:
+        if result.failed_functional_results:
+            print("\nFunctional Check Failures:")
+            for failure in result.failed_functional_results:
                 print(f"- {failure}")
         
         if result.failed_results:

@@ -5,9 +5,9 @@
   "totalFiles": 91,
   "passingFiles": 91,
   "failingFiles": 0,
-  "failedSanity": 0,
-  "passedSanity": 95,
-  "failedSanityTests": [],
+  "failedFunctionalCheck": 0,
+  "passedFunctionalCheck": 95,
+  "failedFunctionalCheckResults": [],
   "passedResults": [
     {
       "title": "exploit access control vulnerability",
