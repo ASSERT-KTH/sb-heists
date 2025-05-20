@@ -102,7 +102,6 @@ class CustomReporter extends Spec {
             // Write to JSON file
             const jsonPath = path.join(__dirname, 'test-results.json');
             fs.writeFileSync(jsonPath, JSON.stringify(results, null, 2));
-            console.log(`\nTest results written to ${jsonPath}`);
         }
     });
   }

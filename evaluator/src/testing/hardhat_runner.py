@@ -7,13 +7,14 @@ from testing.exceptions import HardhatRunnerError
 from strategies.base import PatchStrategy
 
 class HardhatTestRunner:
-    def __init__(self, hardhat_dir: str):
+    def __init__(self, hardhat_dir: str, results_dir: str):
         """
         Initialize HardhatTestRunner with configuration
         config should contain:
         - working_directory: str (path to project root)
         - hardhat_path: str (path to hardhat executable)
         """
+        self.results_dir = results_dir
         self.working_directory = hardhat_dir
         if not os.path.isfile(os.path.join(self.working_directory, "hardhat.config.js")):
             raise HardhatRunnerError(f"Invalid hardhat directory: {hardhat_dir}")
@@ -36,8 +37,13 @@ class HardhatTestRunner:
                 capture_output=True,
                 text=True
             )
-            print(result.stdout)
-            print(result.stderr)
+            if result.stdout:
+                with open(os.path.join(self.results_dir, "hardhat_output.txt"), "w") as f:
+                    f.write(result.stdout)
+            # check ir stderr is not empty
+            if result.stderr:
+                with open(os.path.join(self.results_dir, "hardhat_error.txt"), "w") as f:
+                    f.write(result.stderr)
             return result
         except Exception as e:
             raise HardhatRunnerError(f"Failed to execute command: {str(e)}")
@@ -59,6 +65,11 @@ class HardhatTestRunner:
         """Parse the test result"""
         with open(os.path.join(self.working_directory, "scripts/test-results.json"), "r") as f:
             test_results = json.load(f)
+        # move the test results to the results directory
+        with open(os.path.join(self.results_dir, "test-results.json"), "w") as f:
+            json.dump(test_results, f, indent=4)
+        # remove the test results from the hardhat directory
+        os.remove(os.path.join(self.working_directory, "scripts/test-results.json"))
         return TestResult(
             contract=contract_path,
             patch_path=os.path.join(*patch_path.split("/")[-3:]),
