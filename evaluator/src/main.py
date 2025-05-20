@@ -5,6 +5,7 @@ from constants import PatchFormat
 from config import BASE_DIR, LOG_LEVEL
 import logging
 import os
+import datetime
 
 def setup_logging():
     logging.basicConfig(
@@ -25,12 +26,20 @@ def main():
     parser.add_argument('--patch', required=True, help='Path to patch file')
     parser.add_argument('--contract-file', required=True, help=f'Contract file to patch in dataset {os.path.abspath(BASE_DIR)}/contracts/dataset (e.g., reentrancy/reentrancy_simple.sol)')
     parser.add_argument('--main-contract', required=True, help='Main contract to patch')
+    parser.add_argument('--output', default='results', help='Output path for results')
     
     args = parser.parse_args()
 
     try:
+        # get time of execution
+        time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        results_dir = os.path.join(os.path.dirname(current_dir), args.output, time)
+        results_dir = os.path.abspath(results_dir)
+        os.makedirs(results_dir, exist_ok=True)
+        logger.info(f"Results will be saved in {results_dir}")
         # Initialize evaluator early to access dataset files
-        evaluator = PatchEvaluator(BASE_DIR)
+        evaluator = PatchEvaluator(BASE_DIR, results_dir)
 
         logger.info(f"Loading patch from {args.patch}")
         patch = load_patch(args.patch, args.contract_file, args.main_contract, args.format)
@@ -58,6 +67,8 @@ def main():
                 print(f"- Exploit file: {failure["file"]}")
                 print(f"  Contract File: {failure["contractFile"]}")
                 print(f"  Error: {failure["error"]}")
+
+        print(f"\nResults saved in {results_dir}")
                 
     except Exception as e:
         logger.error(f"Fatal error: {str(e)}")

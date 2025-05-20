@@ -8,7 +8,7 @@ import os
 import logging
 
 class PatchEvaluator:
-    def __init__(self, base_directory: str):
+    def __init__(self, base_directory: str, results_directory: str):
         self.file_manager = FileManager(base_directory)
         self.dataset_dir = os.path.abspath(os.path.join(base_directory, "contracts", "dataset")).replace(os.sep, '/')
         self.dataset_files = []
@@ -18,7 +18,8 @@ class PatchEvaluator:
                     parent_dir = os.path.basename(root)
                     self.dataset_files.append(os.path.join(parent_dir, file).replace(os.sep, '/'))
         self.patch_factory = PatchStrategyFactory()
-        self.test_runner = HardhatTestRunner(base_directory)
+        self.test_runner = HardhatTestRunner(base_directory, results_directory)
+        self.results_directory = results_directory
         self.logger = logging.getLogger(__name__)
 
     def evaluate_patch(self, patch: Patch) -> TestResult:
