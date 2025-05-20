@@ -45,6 +45,7 @@ python src/main.py \
     --patch <path-to-patch-file> \
     --contract-file <contract-from-dataset> \
     --main-contract <contract-name>
+    --output <output-directory>
 ```
 
 ### Required Arguments
@@ -53,6 +54,7 @@ python src/main.py \
 - `--patch`: Path to the patch file that will be evaluated
 - `--contract-file`: Contract in `smartbugs-curated/0.4.x/contracts/dataset`. Required format `<vulnerability-type>/<filename>`.
 - `--main-contract`: Name of the main contract to be patched
+- `--output`: Path to output directory to store results. Default: `./results`
 
 ### Example
 
@@ -87,7 +89,14 @@ Exploit Test Failures (1):
 - Exploit file: reentrancy/reentrancy_simple_test.js
   Contract File: reentrancy/reentrancy_simple.sol
   Error: Transaction reverted without a reason string
+
+Results saved in /sb-heist/evaluator/results/20250520_101154
 ```
+
+In the `results/20250520_101154` you will find the following:
+- `hardhat_error.txt`: Warnings and errors from hardhat compilation and testing processes.
+- `hardhat_output.txt`: Standard output of hardhat reporter.
+- `test-results.json`: json file with test results.
 
 ## Development
 
