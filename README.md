@@ -9,6 +9,17 @@ A comprehensive framework for testing smart contract security patches against re
 See our paper [Do Automated Fixes Truly Mitigate Smart Contract Exploits?](https://arxiv.org/pdf/2501.04600).
 The paper's results and tool reproduction details are located [here](https://github.com/ASSERT-KTH/RepairComp).
 
+```bibtex
+@article{10.1109-tse.2025.3618123,
+ title = {Do Automated Fixes Truly Mitigate Smart Contract Exploits?},
+ year = {2025},
+ author = {Sofia Bobadilla and Monica Jin and Martin Monperrus},
+ url = {http://oadoi.org/10.1109/tse.2025.3618123},
+ journal = {IEEE Transactions on Software Engineering},
+ doi = {10.1109/tse.2025.3618123},
+}
+```
+
 ## 🎯 Project Structure
 
 ```
